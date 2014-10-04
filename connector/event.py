@@ -82,7 +82,8 @@ class Event(object):
     def __init__(self):
         self._consumers = {None: set()}
 
-    def subscribe(self, consumer, model_names=None, replacing=None):
+    def subscribe(self, consumer, model_names=None, replacing=None,
+                  bulk=False):
         """ Subscribe a consumer on the event
 
         :param consumer: the function to register on the event
@@ -95,6 +96,8 @@ class Event(object):
         if not hasattr(model_names, '__iter__'):
             model_names = [model_names]
         for name in model_names:
+            if bulk:
+                name = "__bulk__.%s" % (name,)
             self._consumers.setdefault(name, set()).add(consumer)
 
     def unsubscribe(self, consumer, model_names=None):
@@ -106,20 +109,24 @@ class Event(object):
         """
         if not hasattr(model_names, '__iter__'):
             model_names = [model_names]
+        model_names = [model_names] + \
+                      ["__bulk__.%s" % (name,) for name in model_names]
         for name in model_names:
             if name in self._consumers:
                 self._consumers[name].discard(consumer)
 
-    def has_consumer_for(self, session, model_name):
+    def has_consumer_for(self, session, model_name, bulk=False):
         """ Return True if at least one consumer is registered
         for the model.
         """
         if any(self._consumers_for(session, None)):
             return True  # at least 1 global consumer exist
-        return any(self._consumers_for(session, model_name))
+        return any(self._consumers_for(session, model_name, bulk))
 
-    def _consumers_for(self, session, model_name):
+    def _consumers_for(self, session, model_name, bulk=False):
         is_installed = session.is_module_installed
+        if bulk:
+            model_name = "__bulk__.%s" % (name,)
         return (cons for cons in self._consumers.get(model_name, ())
                 if is_installed(get_openerp_module(cons)))
 
