@@ -50,7 +50,8 @@ STATES = [(PENDING, 'Pending'),
 
 DEFAULT_PRIORITY = 10  # used by the PriorityQueue to sort the jobs
 DEFAULT_MAX_RETRIES = 5
-RETRY_INTERVAL = 10 * 60  # seconds
+#We should make it configurable!!!
+RETRY_INTERVAL = 1 * 24 * 60 * 60  # seconds (once a day)
 
 _logger = logging.getLogger(__name__)
 

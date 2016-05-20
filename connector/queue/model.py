@@ -44,7 +44,7 @@ class QueueJob(orm.Model):
 
     _order = 'date_created DESC, date_done DESC'
 
-    _removal_interval = 30  # days
+    _removal_interval = 15  # days
 
     _columns = {
         'worker_id': fields.many2one('queue.worker', string='Worker',
