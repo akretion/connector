@@ -3,13 +3,13 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 
 import mock
-from odoo.addons.component.core import Component, WorkContext
-from odoo.addons.component.tests.common import (
+from openerp.addons.component.core import Component, WorkContext
+from openerp.addons.component.tests.common import (
     ComponentRegistryCase,
     TransactionComponentRegistryCase,
 )
 
-from odoo.addons.connector.components.mapper import (
+from openerp.addons.connector.components.mapper import (
     MappingDefinition,
     changed_by,
     only_create,

@@ -12,8 +12,8 @@ create the binding between them.
 
 """
 
-from odoo import fields, models, tools
-from odoo.addons.component.core import AbstractComponent
+from openerp import fields, models, tools
+from openerp.addons.component.core import AbstractComponent
 
 
 class Binder(AbstractComponent):
@@ -34,7 +34,7 @@ class Binder(AbstractComponent):
 
     _external_field = 'external_id'  # override in sub-classes
     _backend_field = 'backend_id'  # override in sub-classes
-    _odoo_field = 'odoo_id'  # override in sub-classes
+    _openerp_field = 'openerp_id'  # override in sub-classes
     _sync_date_field = 'sync_date'  # override in sub-classes
 
     def to_internal(self, external_id, unwrap=False):
@@ -54,11 +54,11 @@ class Binder(AbstractComponent):
         )
         if not bindings:
             if unwrap:
-                return self.model.browse()[self._odoo_field]
+                return self.model.browse()[self._openerp_field]
             return self.model.browse()
         bindings.ensure_one()
         if unwrap:
-            bindings = bindings[self._odoo_field]
+            bindings = bindings[self._openerp_field]
         return bindings
 
     def to_external(self, binding, wrap=False):
@@ -76,7 +76,7 @@ class Binder(AbstractComponent):
             binding = self.model.browse(binding)
         if wrap:
             binding = self.model.with_context(active_test=False).search(
-                [(self._odoo_field, '=', binding.id),
+                [(self._openerp_field, '=', binding.id),
                  (self._backend_field, '=', self.backend_record.id),
                  ]
             )
@@ -123,7 +123,7 @@ class Binder(AbstractComponent):
         else:
             binding = self.model.browse(binding)
 
-        return binding[self._odoo_field]
+        return binding[self._openerp_field]
 
     def unwrap_model(self):
         """ For a binding model, gives the normal model.
@@ -132,9 +132,9 @@ class Binder(AbstractComponent):
         it will return ``product.product``.
         """
         try:
-            column = self.model._fields[self._odoo_field]
+            column = self.model._fields[self._openerp_field]
         except KeyError:
             raise ValueError(
                 'Cannot unwrap model %s, because it has no %s fields'
-                % (self.model._name, self._odoo_field))
+                % (self.model._name, self._openerp_field))
         return column.comodel_name

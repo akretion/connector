@@ -7,16 +7,16 @@ Listeners
 =========
 
 Listeners are Components notified when events happen.
-Documentation in :mod:`odoo.addons.component_event.components.event`
+Documentation in :mod:`openerp.addons.component_event.components.event`
 
 The base listener for the connectors add a method
 :meth:`ConnectorListener.no_connector_export` which can be used with
-:func:`odoo.addons.component_event.skip_if`.
+:func:`openerp.addons.component_event.skip_if`.
 
 
 """
 
-from odoo.addons.component.core import AbstractComponent
+from openerp.addons.component.core import AbstractComponent
 
 
 class ConnectorListener(AbstractComponent):
@@ -28,11 +28,11 @@ class ConnectorListener(AbstractComponent):
     def no_connector_export(self, record):
         """ Return if the 'connector_no_export' has been set in context
 
-        To be used with :func:`odoo.addons.component_event.skip_if`
+        To be used with :func:`openerp.addons.component_event.skip_if`
         on Events::
 
-            from odoo.addons.component.core import Component
-            from odoo.addons.component_event import skip_if
+            from openerp.addons.component.core import Component
+            from openerp.addons.component_event import skip_if
 
 
             class MyEventListener(Component):

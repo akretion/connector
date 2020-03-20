@@ -5,14 +5,14 @@
 import mock
 import unittest
 
-from odoo import api
-from odoo.modules.registry import RegistryManager
-from odoo.tests import common
-from odoo.addons.connector import connector
-from odoo.addons.queue_job.exception import RetryableJobError
-from odoo.addons.connector.connector import (
+from openerp import api
+from openerp.modules.registry import RegistryManager
+from openerp.tests import common
+from openerp.addons.connector import connector
+from openerp.addons.queue_job.exception import RetryableJobError
+from openerp.addons.connector.connector import (
     is_module_installed,
-    get_odoo_module,
+    get_openerp_module,
     ConnectorEnvironment,
     ConnectorUnit,
 )
@@ -38,9 +38,9 @@ class TestModuleInstalledFunctions(common.TransactionCase):
         """ Test on an installed module """
         self.assertFalse(is_module_installed(self.env, 'lambda'))
 
-    def test_get_odoo_module(self):
+    def test_get_openerp_module(self):
         """ Odoo module is found from a Python path """
-        self.assertEquals(get_odoo_module(TestModuleInstalledFunctions),
+        self.assertEqual(get_openerp_module(TestModuleInstalledFunctions),
                           'connector')
 
 
@@ -220,4 +220,4 @@ class TestAdvisoryLock(common.TransactionCase):
         connector_unit2 = mock_connector_unit(self.env2)
         with self.assertRaises(RetryableJobError) as cm:
             connector_unit2.advisory_lock_or_retry(lock, retry_seconds=3)
-            self.assertEquals(cm.exception.seconds, 3)
+            self.assertEqual(cm.exception.seconds, 3)

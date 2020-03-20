@@ -62,7 +62,7 @@ def get_backend(service, version=None):
 # Represents an entry for a class in a ``Backend`` registry.
 _ConnectorUnitEntry = namedtuple('_ConnectorUnitEntry',
                                  ['cls',
-                                  'odoo_module',
+                                  'openerp_module',
                                   'replaced_by'])
 
 
@@ -227,7 +227,7 @@ class Backend(object):
                 # It happens when the entries in 'replaced_by' are
                 # in modules not installed.
                 if not replacings:
-                    if (is_module_installed(env, entry.odoo_module) and
+                    if (is_module_installed(env, entry.openerp_module) and
                             issubclass(entry.cls, base_class) and
                             entry.cls.match(env, model_name)):
                         candidates.add(entry.cls)
@@ -245,7 +245,7 @@ class Backend(object):
         :param base_class: class (and its subclass) to search in the registry
         :type base_class: :py:class:`connector.connector.MetaConnectorUnit`
         :param env: current env
-        :type env: :py:class:`odoo.api.EnvironmentError`
+        :type env: :py:class:`openerp.api.EnvironmentError`
         """
         matching_classes = self._get_classes(base_class, env,
                                              model_name)
@@ -280,7 +280,7 @@ class Backend(object):
                                  (cls, replacing))
 
         entry = _ConnectorUnitEntry(cls=cls,
-                                    odoo_module=cls._module,
+                                    openerp_module=cls._module,
                                     replaced_by=[])
         if replacing is not None:
             if replacing is cls:

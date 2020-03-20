@@ -65,8 +65,8 @@ The usual categories are:
 
 """
 
-from odoo.addons.component.core import AbstractComponent
-from odoo.addons.queue_job.exception import RetryableJobError
+from openerp.addons.component.core import AbstractComponent
+from openerp.addons.queue_job.exception import RetryableJobError
 from ..connector import pg_try_advisory_lock
 
 
@@ -98,7 +98,7 @@ class BaseConnectorComponent(AbstractComponent):
         """ Acquire a Postgres transactional advisory lock or retry job
 
         When the lock cannot be acquired, it raises a
-        :exc:`odoo.addons.queue_job.exception.RetryableJobError` so the job
+        :exc:`openerp.addons.queue_job.exception.RetryableJobError` so the job
         is retried after n ``retry_seconds``.
 
         Usage example:
@@ -113,7 +113,7 @@ class BaseConnectorComponent(AbstractComponent):
             )
             self.advisory_lock_or_retry(lock_name, retry_seconds=2)
 
-        See :func:`odoo.addons.connector.connector.pg_try_advisory_lock` for
+        See :func:`openerp.addons.connector.connector.pg_try_advisory_lock` for
         details.
 
         :param lock: The lock name. Can be anything convertible to a

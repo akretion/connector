@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 
 
-from odoo import models, fields, api
+from openerp import models, fields, api
 from . import backend
 
 
@@ -56,7 +56,7 @@ class ConnectorBackend(models.AbstractModel):
     # XXX those 2 fields will not strictly be necessary once we
     # change to the new implementation (especially the version)
     # they can be removed in Odoo 11.0
-    name = fields.Char(required=True)
+    name = fields.Char()
     # replace by a selection in concrete models
     version = fields.Selection(selection=[])
 
@@ -94,7 +94,7 @@ class ExternalBinding(models.AbstractModel):
 
     It needs to implements at least these fields:
 
-    odoo_id
+    openerp_id
         The many2one to the record it links (used by ``_inherits``).
 
     backend_id
@@ -118,9 +118,9 @@ class ExternalBinding(models.AbstractModel):
         class MagentoResPartnerCategory(models.Model):
             _name = 'magento.res.partner.category'
 
-            _inherits = {'res.partner.category': 'odoo_id'}
+            _inherits = {'res.partner.category': 'openerp_id'}
 
-            odoo_id = fields.Many2one(comodel_name='res.partner.category',
+            openerp_id = fields.Many2one(comodel_name='res.partner.category',
                                       string='Partner Category',
                                       required=True,
                                       ondelete='cascade')

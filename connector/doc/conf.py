@@ -27,12 +27,12 @@ if os.environ.get('TRAVIS_BUILD_DIR') and os.environ.get('VERSION'):
     # build from travis
     repos_home = os.environ['HOME']
     deps_path = os.path.join(repos_home, 'dependencies')
-    odoo_folder = 'odoo-10.0'
-    odoo_root = os.path.join(repos_home, odoo_folder)
+    openerp_folder = 'openerp-10.0'
+    openerp_root = os.path.join(repos_home, openerp_folder)
     build_path = os.environ['TRAVIS_BUILD_DIR']
 else:
     # build from dev
-    odoo_root = os.path.abspath('../../../../src')
+    openerp_root = os.path.abspath('../../../../src')
     deps_path = os.path.abspath('../../..')
     build_path = os.path.abspath('../..')
 
@@ -45,8 +45,8 @@ def add_path(*paths):
     )
 
 
-add_path(odoo_root, 'odoo', 'addons')
-add_path(odoo_root, 'addons')
+add_path(openerp_root, 'openerp', 'addons')
+add_path(openerp_root, 'addons')
 add_path(build_path)
 
 deps_repos = [repo for repo in os.listdir(deps_path)
@@ -60,10 +60,10 @@ addons = [x for x in os.listdir(build_path)
           if not x.startswith(('.', '__')) and
           os.path.isdir(os.path.join(build_path, x))]
 
-# sphinxodoo.ext.autodoc variables
-sphinxodoo_root_path = odoo_root
-sphinxodoo_addons = addons
-sphinxodoo_addons_path = addons_paths
+# sphinxopenerp.ext.autodoc variables
+sphinxopenerp_root_path = openerp_root
+sphinxopenerp_addons = addons
+sphinxopenerp_addons_path = addons_paths
 sys.path.append(build_path)
 
 
@@ -76,7 +76,7 @@ sys.path.append(build_path)
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.intersphinx',
               'sphinx.ext.todo', 'sphinx.ext.viewcode',
-              'sphinxodoo.ext.autodoc']
+              'sphinxopenerp.ext.autodoc']
 
 todo_include_todos = False
 
@@ -342,7 +342,7 @@ texinfo_documents = [
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
     'http://docs.python.org/': None,
-    'odooweb': ('https://www.odoo.com/documentation/10.0/', None),
-    'odoodev': ('https://www.odoo.com/documentation/10.0/', None),
-    'connectormagento': ('http://www.odoo-magento-connector.com', None),
+    'openerpweb': ('https://www.openerp.com/documentation/10.0/', None),
+    'openerpdev': ('https://www.openerp.com/documentation/10.0/', None),
+    'connectormagento': ('http://www.openerp-magento-connector.com', None),
 }

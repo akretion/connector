@@ -19,12 +19,12 @@ binders to create the link between them.
 import logging
 import psycopg2
 
-from odoo.addons.component.core import AbstractComponent
+from openerp.addons.component.core import AbstractComponent
 from contextlib import contextmanager
-from odoo.addons.connector.exception import (IDMissingInBackend,
+from openerp.addons.connector.exception import (IDMissingInBackend,
                                              RetryableJobError)
-from odoo import _
-import odoo
+from openerp import _
+import openerp
 
 _logger = logging.getLogger(__name__)
 
@@ -61,7 +61,7 @@ class Synchronizer(AbstractComponent):
         It looks for a Component with ``_usage`` being equal to
         ``_base_mapper_usage``.
 
-        :rtype: :py:class:`odoo.addons.component.core.Component`
+        :rtype: :py:class:`openerp.addons.component.core.Component`
         """
         if self._mapper is None:
             self._mapper = self.component(usage=self._base_mapper_usage)
@@ -74,7 +74,7 @@ class Synchronizer(AbstractComponent):
         The instanciation is delayed because some synchronisations do
         not need such an unit and the unit may not exist.
 
-        :rtype: :py:class:`odoo.addons.component.core.Component`
+        :rtype: :py:class:`openerp.addons.component.core.Component`
         """
         if self._binder is None:
             self._binder = self.binder_for()
@@ -91,7 +91,7 @@ class Synchronizer(AbstractComponent):
         It looks for a Component with ``_usage`` being equal to
         ``_base_backend_adapter_usage``.
 
-        :rtype: :py:class:`odoo.addons.component.core.Component`
+        :rtype: :py:class:`openerp.addons.component.core.Component`
         """
         if self._backend_adapter is None:
             self._backend_adapter = self.component(
@@ -160,7 +160,7 @@ class GenericExporter(AbstractComponent):
         # exports (due to dependencies) and one of them fails.
         # The commit will also release the lock acquired on the binding
         # record
-        if not odoo.tools.config['test_enable']:
+        if not openerp.tools.config['test_enable']:
             self.env.cr.commit()  # pylint: disable=E8102
 
         self._after_export()
@@ -245,8 +245,8 @@ class GenericExporter(AbstractComponent):
         record created by :meth:`_export_dependency`), resulting in:
 
             IntegrityError: duplicate key value violates unique
-            constraint "my_backend_product_product_odoo_uniq"
-            DETAIL:  Key (backend_id, odoo_id)=(1, 4851) already exists.
+            constraint "my_backend_product_product_openerp_uniq"
+            DETAIL:  Key (backend_id, openerp_id)=(1, 4851) already exists.
 
         In that case, we'll retry the import just later.
 
@@ -290,7 +290,7 @@ class GenericExporter(AbstractComponent):
                      in :meth:`~._export_dependencies`.
 
         :param relation: record to export if not already exported
-        :type relation: :py:class:`odoo.models.BaseModel`
+        :type relation: :py:class:`openerp.models.BaseModel`
         :param binding_model: name of the binding model for the relation
         :type binding_model: str | unicode
         :param component_usage: 'usage' to look for to find the Component to
@@ -317,7 +317,7 @@ class GenericExporter(AbstractComponent):
         wrap = relation._name != binding_model
 
         if wrap and hasattr(relation, binding_field):
-            domain = [('odoo_id', '=', relation.id),
+            domain = [('openerp_id', '=', relation.id),
                       ('backend_id', '=', self.backend_record.id)]
             binding = self.env[binding_model].search(domain)
             if binding:
@@ -332,12 +332,12 @@ class GenericExporter(AbstractComponent):
             # depends.
             else:
                 bind_values = {'backend_id': self.backend_record.id,
-                               'odoo_id': relation.id}
+                               'openerp_id': relation.id}
                 if binding_extra_vals:
                     bind_values.update(binding_extra_vals)
                 # If 2 jobs create it at the same time, retry
                 # one later. A unique constraint (backend_id,
-                # odoo_id) should exist on the binding model
+                # openerp_id) should exist on the binding model
                 with self._retry_unique_violation():
                     binding = (self.env[binding_model]
                                .with_context(connector_no_export=True)
@@ -348,7 +348,7 @@ class GenericExporter(AbstractComponent):
                     # will pop if an other job already created
                     # the same binding. It will be caught and
                     # raise a RetryableJobError.
-                    if not odoo.tools.config['test_enable']:
+                    if not openerp.tools.config['test_enable']:
                         self.env.cr.commit()  # pylint: disable=E8102
         else:
             # If my_backend_bind_ids does not exist we are typically in a
@@ -367,7 +367,7 @@ class GenericExporter(AbstractComponent):
 
     def _map_data(self):
         """ Returns an instance of
-        :py:class:`~odoo.addons.connector.components.mapper.MapRecord`
+        :py:class:`~openerp.addons.connector.components.mapper.MapRecord`
 
         """
         return self.mapper.map_record(self.binding)

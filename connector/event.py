@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 
 from collections import Callable
-from .connector import get_odoo_module, is_module_installed
+from .connector import get_openerp_module, is_module_installed
 
 
 class Event(object):
@@ -103,7 +103,7 @@ class Event(object):
 
     def _consumers_for(self, env, model_name):
         return (cons for cons in self._consumers.get(model_name, ())
-                if is_module_installed(env, get_odoo_module(cons)))
+                if is_module_installed(env, get_openerp_module(cons)))
 
     def fire(self, env, model_name, *args, **kwargs):
         """ Call each consumer subscribed on the event with the given
@@ -113,7 +113,7 @@ class Event(object):
         which are subscribed on the same model
 
         :param env: current env
-        :type env: :py:class:`odoo.api.Environment`
+        :type env: :py:class:`openerp.api.Environment`
         :param model_name: name of the model
         :type model_name: str
         :param args: arguments propagated to the consumer
@@ -167,7 +167,7 @@ on_record_write = Event()
 
 Listeners should take the following arguments:
 
- * env: :py:class:`~odoo.api.Environment` object
+ * env: :py:class:`~openerp.api.Environment` object
  * model_name: name of the model
  * record_id: id of the record
  * vals:  field values of the new record, e.g {'field_name': field_value, ...}
@@ -180,7 +180,7 @@ on_record_create = Event()
 
 Listeners should take the following arguments:
 
- * env: :py:class:`~odoo.api.Environment` object
+ * env: :py:class:`~openerp.api.Environment` object
  * model_name: name of the model
  * record_id: id of the created record
  * vals:  field values updated, e.g {'field_name': field_value, ...}
@@ -193,7 +193,7 @@ on_record_unlink = Event()
 
 Listeners should take the following arguments:
 
- * env: :py:class:`~odoo.api.Environment` object
+ * env: :py:class:`~openerp.api.Environment` object
  * model_name: name of the model
  * record_id: id of the record
 

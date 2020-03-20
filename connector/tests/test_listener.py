@@ -4,12 +4,12 @@
 
 import mock
 
-from odoo.tools import frozendict
-from odoo.addons.component.core import Component
-from odoo.addons.component_event.core import EventWorkContext
-from odoo.addons.component_event.components.event import skip_if
-from odoo.addons.component.tests.common import TransactionComponentRegistryCase
-from odoo.addons.connector import components
+from openerp.tools import frozendict
+from openerp.addons.component.core import Component
+from openerp.addons.component_event.core import EventWorkContext
+from openerp.addons.component_event.components.event import skip_if
+from openerp.addons.component.tests.common import TransactionComponentRegistryCase
+from openerp.addons.connector import components
 
 
 class TestEventListener(TransactionComponentRegistryCase):
@@ -49,5 +49,5 @@ class TestEventListener(TransactionComponentRegistryCase):
         # collect the event and notify it
         record = mock.Mock(name='record')
         collected = self.collecter.collect_events('on_record_create')
-        self.assertEquals(2, len(collected.events))
+        self.assertEqual(2, len(collected.events))
         collected.notify(record)

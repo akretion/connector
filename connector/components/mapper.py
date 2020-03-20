@@ -16,9 +16,9 @@ import logging
 from collections import namedtuple
 from contextlib import contextmanager
 
-from odoo import models
-from odoo.addons.component.core import AbstractComponent
-from odoo.addons.component.exception import NoComponentError
+from openerp import models
+from openerp.addons.component.core import AbstractComponent
+from openerp.addons.component.exception import NoComponentError
 from ..exception import MappingError
 
 
@@ -515,7 +515,7 @@ class Mapper(AbstractComponent):
             children = [('items', 'line_ids', 'model.name')]
 
         It allows to create the sales order and all its lines with the
-        same call to :py:meth:`odoo.models.BaseModel.create()`.
+        same call to :py:meth:`openerp.models.BaseModel.create()`.
 
         When using ``children`` for items of a record, we need to create
         a :py:class:`Mapper` for the model of the items, and optionally a
@@ -562,9 +562,9 @@ class Mapper(AbstractComponent):
         ::
 
             >>> cls.__bases__
-            (<class 'odoo.addons.connector.tests.test_mapper.ThirdMapper'>,
-             <class 'odoo.addons.component.core.second.mapper'>,
-             <class 'odoo.addons.component.core.base'>)
+            (<class 'openerp.addons.connector.tests.test_mapper.ThirdMapper'>,
+             <class 'openerp.addons.component.core.second.mapper'>,
+             <class 'openerp.addons.component.core.base'>)
 
         This method traverses these bases, from the bottom to the top, and
         merges the mapping definitions. It reuses the computed definitions

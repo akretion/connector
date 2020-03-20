@@ -4,9 +4,9 @@
 
 import unittest
 import mock
-import odoo.tests.common as common
+import openerp.tests.common as common
 
-from odoo.addons.connector.unit.mapper import (
+from openerp.addons.connector.unit.mapper import (
     Mapper,
     ImportMapper,
     ExportMapper,
@@ -22,8 +22,8 @@ from odoo.addons.connector.unit.mapper import (
     MapOptions,
     mapping)
 
-from odoo.addons.connector.backend import Backend
-from odoo.addons.connector.connector import ConnectorEnvironment
+from openerp.addons.connector.backend import Backend
+from openerp.addons.connector.connector import ConnectorEnvironment
 
 
 class test_mapper(unittest.TestCase):

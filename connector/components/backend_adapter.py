@@ -13,7 +13,7 @@ used by the backend.
 
 """
 
-from odoo.addons.component.core import AbstractComponent
+from openerp.addons.component.core import AbstractComponent
 
 
 class BackendAdapter(AbstractComponent):

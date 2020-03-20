@@ -4,15 +4,15 @@
 
 import unittest
 
-import odoo.tests.common as common
-from odoo.addons.connector.backend import (Backend,
+import openerp.tests.common as common
+from openerp.addons.connector.backend import (Backend,
                                            get_backend,
                                            BACKENDS)
-from odoo.addons.connector.exception import NoConnectorUnitError
-from odoo.addons.connector.connector import (Binder,
+from openerp.addons.connector.exception import NoConnectorUnitError
+from openerp.addons.connector.connector import (Binder,
                                              ConnectorUnit)
-from odoo.addons.connector.unit.mapper import ExportMapper
-from odoo.addons.connector.unit.backend_adapter import BackendAdapter
+from openerp.addons.connector.unit.mapper import ExportMapper
+from openerp.addons.connector.unit.backend_adapter import BackendAdapter
 
 
 class test_backend(unittest.TestCase):
@@ -139,7 +139,7 @@ class test_backend_register(common.TransactionCase):
             _model_name = 'res.users'
 
         # trick the origin of the class, let it think
-        # that it comes from the odoo module 'not installed module'
+        # that it comes from the openerp module 'not installed module'
         LambdaNoUnit._module = 'not installed module'
         self.backend(LambdaNoUnit)
 

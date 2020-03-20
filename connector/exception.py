@@ -2,7 +2,7 @@
 # Copyright 2012-2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 
-from odoo.addons.queue_job.exception import (
+from openerp.addons.queue_job.exception import (
     RetryableJobError,
     JobError,
 )

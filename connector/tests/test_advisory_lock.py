@@ -3,13 +3,13 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 
 import mock
-from odoo import api
-from odoo.tests import common
-from odoo.modules.registry import RegistryManager
-from odoo.addons.queue_job.exception import RetryableJobError
-from odoo.addons.connector.connector import pg_try_advisory_lock
-from odoo.addons.component.core import WorkContext
-from odoo.addons.component.tests.common import TransactionComponentCase
+from openerp import api
+from openerp.tests import common
+from openerp.modules.registry import RegistryManager
+from openerp.addons.queue_job.exception import RetryableJobError
+from openerp.addons.connector.connector import pg_try_advisory_lock
+from openerp.addons.component.core import WorkContext
+from openerp.addons.component.tests.common import TransactionComponentCase
 
 
 class TestAdvisoryLock(TransactionComponentCase):
@@ -63,7 +63,7 @@ class TestAdvisoryLock(TransactionComponentCase):
         # acquire the lock
         component.advisory_lock_or_retry(lock)
 
-        # instanciate another component using a different odoo env
+        # instanciate another component using a different openerp env
         # hence another PG transaction
         backend2 = mock.MagicMock()
         backend2.env = self.env2
@@ -72,4 +72,4 @@ class TestAdvisoryLock(TransactionComponentCase):
         component2 = work2.component_by_name('base.connector')
         with self.assertRaises(RetryableJobError) as cm:
             component2.advisory_lock_or_retry(lock, retry_seconds=3)
-            self.assertEquals(cm.exception.seconds, 3)
+            self.assertEqual(cm.exception.seconds, 3)
