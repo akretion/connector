@@ -10,7 +10,7 @@ from .common import TransactionComponentRegistryCase
 
 
 class TestComponent(TransactionComponentRegistryCase):
-    """ Test usage of components
+    """Test usage of components
 
     These tests are a bit more broad that mere unit tests.
     We test the chain odoo Model -> generate a WorkContext instance -> Work
@@ -154,8 +154,7 @@ class TestComponent(TransactionComponentRegistryCase):
             self.assertEqual(self.env["res.users"], comp.model)
 
     def test_component_error_several(self):
-        """ Use component(usage=...) when more than one generic component match
-        """
+        """Use component(usage=...) when more than one generic component match"""
         # we create 1 new Component with _usage 'for.test', in the same
         # collection and no _apply_on, and we remove the _apply_on of component
         # 1 so they are generic components for a collection
@@ -182,8 +181,7 @@ class TestComponent(TransactionComponentRegistryCase):
                 base.component(usage="for.test")
 
     def test_component_error_several_same_model(self):
-        """ Use component(usage=...) when more than one component match a model
-        """
+        """Use component(usage=...) when more than one component match a model"""
         # we create a new Component with _usage 'for.test', in the same
         # collection and no _apply_on
         class Component3(Component):
@@ -202,7 +200,7 @@ class TestComponent(TransactionComponentRegistryCase):
                 base.component(usage="for.test")
 
     def test_component_specific_model(self):
-        """ Use component(usage=...) when more than one component match but
+        """Use component(usage=...) when more than one component match but
         only one for the specific model"""
         # we create a new Component with _usage 'for.test', in the same
         # collection and no _apply_on. This is a generic component for the
@@ -228,7 +226,7 @@ class TestComponent(TransactionComponentRegistryCase):
             self.assertEquals("component1", comp._name)
 
     def test_component_specific_collection(self):
-        """ Use component(usage=...) when more than one component match but
+        """Use component(usage=...) when more than one component match but
         only one for the specific collection"""
         # we create a new Component with _usage 'for.test', without collection
         # and no _apply_on
@@ -251,7 +249,7 @@ class TestComponent(TransactionComponentRegistryCase):
             self.assertEquals("component1", comp._name)
 
     def test_component_specific_collection_specific_model(self):
-        """ Use component(usage=...) when more than one component match but
+        """Use component(usage=...) when more than one component match but
         only one for the specific model and collection"""
         # we create a new Component with _usage 'for.test', without collection
         # and no _apply_on. This is a component generic for all collections and
@@ -348,7 +346,7 @@ class TestComponent(TransactionComponentRegistryCase):
             self.assertEqual("component1", comp._name)
 
     def test_work_on_many_components(self):
-        """ Check WorkContext.many_components()
+        """Check WorkContext.many_components()
 
         (shortcut to Component.many_components)
         """
