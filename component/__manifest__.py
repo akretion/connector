@@ -11,7 +11,7 @@
     "license": "LGPL-3",
     "category": "Generic Modules",
     "depends": ["base"],
-    "external_dependencies": {"python": ["cachetools"]},
+    "external_dependencies": {"python": ["cachetools", "mock"]},
     "installable": True,
     "development_status": "Stable",
     "maintainers": ["guewen"],

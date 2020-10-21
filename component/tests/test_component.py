@@ -223,7 +223,7 @@ class TestComponent(TransactionComponentRegistryCase):
             # override it only for a given model. So in this case, the final
             # component is component1.
             comp = base.component(usage="for.test")
-            self.assertEquals("component1", comp._name)
+            self.assertEqual("component1", comp._name)
 
     def test_component_specific_collection(self):
         """Use component(usage=...) when more than one component match but
@@ -246,7 +246,7 @@ class TestComponent(TransactionComponentRegistryCase):
             # component3 must be ignored since a component (component1) exists
             # and is specificaly linked to the expected collection.
             comp = base.component(usage="for.test")
-            self.assertEquals("component1", comp._name)
+            self.assertEqual("component1", comp._name)
 
     def test_component_specific_collection_specific_model(self):
         """Use component(usage=...) when more than one component match but
@@ -275,7 +275,7 @@ class TestComponent(TransactionComponentRegistryCase):
             # collection and model. So in this case, the final component is
             # component1.
             comp = base.component(usage="for.test")
-            self.assertEquals("component1", comp._name)
+            self.assertEqual("component1", comp._name)
 
     def test_many_components(self):
         """ Use many_components(usage=...) on the same model """
