@@ -9,7 +9,7 @@
     "license": "LGPL-3",
     "category": "Generic Modules",
     "depends": ["component"],
-    "external_dependencies": {"python": ["cachetools"]},
+    "external_dependencies": {"python": ["cachetools", "mock"]},
     "data": [],
     "installable": True,
 }
