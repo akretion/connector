@@ -24,6 +24,7 @@ import logging
 from datetime import datetime, timedelta
 
 from openerp import models, fields, api, exceptions, _
+import openerp
 
 from .job import STATES, DONE, PENDING, OpenERPJobStorage, JOB_REGISTRY
 from .worker import WORKER_TIMEOUT
@@ -210,7 +211,15 @@ class QueueJob(models.Model):
         jobs = self.with_context(active_test=False).search(
             [('date_done', '<=', fields.Datetime.to_string(deadline))],
         )
-        jobs.unlink()
+
+        with api.Environment.manage():
+            with openerp.registry(self.env.cr.dbname).cursor() as new_cr:
+                new_env = api.Environment(new_cr, self.env.uid, self.env.context)
+                while jobs:
+                    batch_delete = jobs[0:1000]
+                    jobs -= batch_delete
+                    batch_delete.with_env(new_env).unlink()
+                    new_env.cr.commit()
         return True
 
 
